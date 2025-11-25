@@ -12,12 +12,18 @@ import ModulesRoutes from "./Kambaz/Modules/routes.js";
 import AssignmentsRoutes from "./Kambaz/Assignments/routes.js";
 import EnrollmentsRoutes from "./Kambaz/Enrollments/routes.js";
 const CONNECTION_STRING = process.env.DATABASE_CONNECTION_STRING || "mongodb://127.0.0.1:27017/kambaz"
+const VERCEL_PREFIX = process.env.VERCEL_PREFIX;
 mongoose.connect(CONNECTION_STRING);
 
 const app = express()
 app.use(cors({
     credentials: true,
-    origin: process.env.CLIENT_URL || 'http://localhost:3000',
+                 origin: (origin, callback) => {
+                     if (!origin) return callback(null, true);
+                     if (origin === 'http://localhost:3000') return callback(null, true);
+                     if (VERCEL_PREFIX && origin.startsWith(VERCEL_PREFIX)) return callback(null, true);
+                     return callback(new Error("Not allowed by CORS: " + origin));
+                 }
              }));
 const sessionOptions = {
     secret: process.env.SESSION_SECRET || "kambaz",
