@@ -29,8 +29,23 @@ export default function QuizzesDao() {
         return quiz;
     }
 
+    async function updatePoints(totalPoints, quizId){
+        const quiz = await model.findById(quizId);
+        quiz.points = totalPoints;
+        await quiz.save();
+        return quiz;
+    }
+
+    async function updateNumQuestions(numQuestions, quizId){
+        const quiz = await model.findById(quizId);
+        quiz.numQuestions = numQuestions;
+        await quiz.save();
+        return quiz;
+    }
+
 
     return {
-        findQuizzesForCourse, createQuiz, deleteQuiz, updateQuiz, findQuizById, updatePublished
+        findQuizzesForCourse, createQuiz, deleteQuiz, updateQuiz, findQuizById, updatePublished,
+        updatePoints, updateNumQuestions
     }
 }

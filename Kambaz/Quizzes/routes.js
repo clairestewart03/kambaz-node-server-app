@@ -40,7 +40,20 @@ export default function QuizzesRoutes(app) {
         const newQuiz = await dao.updatePublished(quizId);
         res.send(newQuiz);
     }
+    const updatePoints = async (req, res) => {
+        const { quizId, totalPoints } = req.params;
+        const newQuiz = await dao.updatePoints(totalPoints, quizId);
+        res.send(newQuiz);
+    }
 
+    const updateNumQuestions = async (req, res) => {
+        const { quizId, numQuestions } = req.params;
+        const newQuiz = await dao.updateNumQuestions(numQuestions, quizId);
+        res.send(newQuiz);
+    }
+
+    app.put("/api/quizzes/:quizId/numQuestions/:numQuestions", updateNumQuestions);
+    app.put("/api/quizzes/:quizId/points/:totalPoints", updatePoints);
     app.put("/api/quizzes/:quizId/publish", updatePublished);
     app.get("/api/quizzes/:quizId", findQuizById);
     app.get("/api/courses/:courseId/quizzes", findQuizzesForCourse);

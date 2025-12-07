@@ -6,14 +6,23 @@ const quizzesSchema =
             course: String,
             title: String,
             description: String,
-            quizType: String,
+            quizType: {
+                type: String,
+                default: 'Graded Quiz'
+            },
             points: Number,
-            assignmentGroup: String,
+            assignmentGroup: {
+                type: String,
+                default: 'Quizzes'
+            },
             shuffleAnswers: {
                 type: Boolean,
                 default: true
             },
-            timeLimit: Number,
+            timeLimit: {
+                type: Number,
+                default: 20
+            },
             multipleAttempts: Boolean,
             allowedAttempts: Number,
             showCorrectAnswers: String,
@@ -25,7 +34,10 @@ const quizzesSchema =
             availableDate: String,
             untilDate: String,
             published: Boolean,
-            numQuestions: Number
+            numQuestions: {
+                type: Number,
+                default: 0
+            }
         },
         { collection: "quizzes" }
     );
